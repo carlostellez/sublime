@@ -9,20 +9,21 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Lanyers | Lanyards y porta-gafetes personalizados para empresas",
+  title: "Sublime Lab | Lanyards corporativos con sublimación HD",
   description:
-    "Lanyers fabrica lanyards y porta-gafetes personalizados para empresas, agencias y startups. Precios especiales al por mayor para distribuidores. Cotiza tu pedido hoy.",
+    "Lanyards corporativos premium con sublimación de alta definición. Colores vibrantes que no se caen con el lavado ni el uso diario. Únete al Plan Stock Asegurado y olvídate de volver a cotizar.",
   keywords: [
     "lanyards personalizados",
+    "sublimación HD",
+    "lanyards corporativos",
     "porta gafetes empresariales",
     "lanyards al por mayor",
-    "distribuidor de lanyards",
-    "material POP corporativo",
+    "Sublime Lab",
   ],
   openGraph: {
-    title: "Lanyers | Lanyards personalizados para empresas y distribuidores",
+    title: "Sublime Lab | Lanyards corporativos con sublimación HD",
     description:
-      "Fabricación y venta al por mayor de lanyards y porta-gafetes personalizados. Cotiza en minutos.",
+      "La imagen de tu empresa, reflejada en la calidad de tu equipo. Cotiza tu diseño gratis hoy.",
     type: "website",
     locale: "es_LA",
   },

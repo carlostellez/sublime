@@ -1,12 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 const links = [
-  { href: "#producto", label: "Producto" },
-  { href: "#casos-de-uso", label: "Casos de uso" },
-  { href: "#mayoreo", label: "Mayoreo" },
-  { href: "#testimonios", label: "Clientes" },
+  { href: "#solucion", label: "Producto" },
+  { href: "#plan-stock", label: "Plan Stock Asegurado" },
+  { href: "#proceso", label: "Cómo funciona" },
+  { href: "#faq", label: "Preguntas" },
   { href: "#contacto", label: "Contacto" },
 ];
 
@@ -17,15 +18,20 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-ink-100 bg-white/90 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between">
         <a href="#top" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-500 text-base font-bold text-white">
-            L
-          </span>
-          <span className="text-lg font-bold tracking-tight text-ink-900">
-            Lanyers
+          <Image
+            src="/images/logo.png"
+            alt="Sublime Lab"
+            width={40}
+            height={40}
+            className="h-10 w-10 object-contain"
+            priority
+          />
+          <span className="text-lg font-bold tracking-tight text-brand-700">
+            Sublime Lab
           </span>
         </a>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {links.map((link) => (
             <a
               key={link.href}
@@ -37,16 +43,16 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <a href="#contacto" className="btn-primary">
-            Cotiza tu pedido
+            Cotización gratis
           </a>
         </div>
 
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-ink-200 text-ink-700 md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-ink-200 text-ink-700 lg:hidden"
           aria-label="Abrir menú"
           aria-expanded={open}
         >
@@ -68,7 +74,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-ink-100 bg-white md:hidden">
+        <div className="border-t border-ink-100 bg-white lg:hidden">
           <nav className="container-page flex flex-col gap-1 py-4">
             {links.map((link) => (
               <a
@@ -85,7 +91,7 @@ export default function Header() {
               onClick={() => setOpen(false)}
               className="btn-primary mt-2 justify-center"
             >
-              Cotiza tu pedido
+              Cotización gratis
             </a>
           </nav>
         </div>

@@ -1,38 +1,37 @@
 const steps = [
   {
     number: "01",
-    title: "Cuéntanos tu proyecto",
-    desc: "Completa el formulario con cantidad, uso y fecha de entrega estimada.",
+    title: "Envías tu logo",
+    desc: "Sube tu logotipo en el formulario de abajo.",
   },
   {
     number: "02",
-    title: "Recibe tu cotización y muestra",
-    desc: "Te enviamos precio, tiempos y una muestra digital de tu diseño en 24-48h.",
+    title: "Aprobamos el montaje digital",
+    desc: "Nuestro equipo diseña una muestra digital exacta de cómo quedará tu lanyard en menos de 2 horas.",
   },
   {
     number: "03",
-    title: "Aprobamos el arte final",
-    desc: "Ajustamos colores, materiales y acabados hasta que quede exactamente como lo imaginaste.",
-  },
-  {
-    number: "04",
-    title: "Producción y entrega",
-    desc: "Fabricamos tu pedido y lo enviamos a tus oficinas, bodega o puntos de venta.",
+    title: "Recibes y repones cuando quieras",
+    desc: "Producimos, enviamos a tu oficina y activamos tu cuenta corporativa para futuros pedidos exprés.",
   },
 ];
 
 export default function Process() {
   return (
-    <section className="py-20 sm:py-28">
+    <section id="proceso" className="py-20 sm:py-28">
       <div className="container-page">
         <div className="mx-auto max-w-2xl text-center">
           <span className="section-eyebrow">Cómo funciona</span>
           <h2 className="mt-4 text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
-            De la idea a tu bodega en 4 pasos
+            Proceso de compra en 3 simples pasos
           </h2>
+          <p className="mt-4 text-base text-ink-500 sm:text-lg">
+            Sabemos que no tienes tiempo que perder. Por eso lo hacemos
+            ridículamente fácil.
+          </p>
         </div>
 
-        <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid gap-8 sm:grid-cols-3">
           {steps.map((step) => (
             <div key={step.number} className="relative">
               <span className="text-5xl font-bold text-brand-100">

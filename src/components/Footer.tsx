@@ -1,15 +1,17 @@
+import Image from "next/image";
+
 const columns = [
   {
     title: "Producto",
-    links: ["Materiales", "Personalización", "Tiempos de entrega", "Preguntas frecuentes"],
+    links: ["Sublimación HD", "Durabilidad", "Broches y accesorios", "Preguntas frecuentes"],
   },
   {
-    title: "Clientes",
-    links: ["Empresas", "Agencias", "Startups", "Distribuidores"],
+    title: "Empresas",
+    links: ["Plan Stock Asegurado", "Cómo funciona", "Cotizar ahora"],
   },
   {
-    title: "Compañía",
-    links: ["Sobre Lanyers", "Casos de éxito", "Contacto", "Política de privacidad"],
+    title: "Sublime Lab",
+    links: ["Sobre nosotros", "Contacto", "Política de privacidad"],
   },
 ];
 
@@ -20,16 +22,20 @@ export default function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <a href="#top" className="flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-500 text-base font-bold text-white">
-                L
-              </span>
-              <span className="text-lg font-bold tracking-tight text-ink-900">
-                Lanyers
+              <Image
+                src="/images/logo.png"
+                alt="Sublime Lab"
+                width={40}
+                height={40}
+                className="h-10 w-10 object-contain"
+              />
+              <span className="text-lg font-bold tracking-tight text-brand-700">
+                Sublime Lab
               </span>
             </a>
             <p className="mt-4 max-w-xs text-sm text-ink-500">
-              Fabricamos y distribuimos lanyards y porta-gafetes personalizados
-              para empresas, agencias, startups y distribuidores mayoristas.
+              Lanyards corporativos con sublimación HD sin límites de color.
+              Diseño, durabilidad y reposición sin fricción para tu empresa.
             </p>
           </div>
 
@@ -56,7 +62,7 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-ink-100 pt-8 sm:flex-row">
           <p className="text-xs text-ink-400">
-            © {new Date().getFullYear()} Lanyers. Todos los derechos reservados.
+            © {new Date().getFullYear()} Sublime Lab · Creaciones sin límites.
           </p>
           <p className="text-xs text-ink-400">
             Hecho para empresas, agencias, startups y distribuidores.
