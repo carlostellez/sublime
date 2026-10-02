@@ -2,13 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------
+   Temas. Valores en canales RGB para poder usar opacidad (bg-surface/90).
+   Contrastes verificados (WCAG): texto >= 4.5:1, elementos UI >= 3:1.
+------------------------------------------------------------------- */
+:root {
+  --c-page: 255 255 255;
+  --c-surface: 255 255 255;
+  --c-surface-alt: 245 246 248;
+  --c-fg: 25 27 38;
+  --c-fg-muted: 72 79 105;
+  --c-fg-subtle: 91 100 128;
+  --c-line: 205 210 220;
+  --c-line-soft: 231 233 238;
+  --c-line-strong: 166 173 190;
+  --c-accent: 22 72 84;
+  --c-accent-soft: 238 245 246;
+  --c-accent-ring: 176 209 214;
+  --c-cta: 163 90 24;
+  --c-action: 163 90 24;
+  --c-action-hover: 138 74 18;
+  --c-action-fg: 255 255 255;
+  --c-shadow: 15 15 25;
+  color-scheme: light;
+}
+
+.dark {
+  --c-page: 11 13 20;
+  --c-surface: 20 23 34;
+  --c-surface-alt: 15 17 27;
+  --c-fg: 243 244 248;
+  --c-fg-muted: 178 185 204;
+  --c-fg-subtle: 153 162 187;
+  --c-line: 52 58 80;
+  --c-line-soft: 33 37 52;
+  --c-line-strong: 88 97 128;
+  --c-accent: 110 214 200;
+  --c-accent-soft: 20 58 64;
+  --c-accent-ring: 44 107 118;
+  --c-cta: 54 29 14;
+  --c-action: 240 176 90;
+  --c-action-hover: 234 184 113;
+  --c-action-fg: 14 15 22;
+  --c-shadow: 0 0 0;
+  color-scheme: dark;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  color: theme("colors.ink.900");
-  background-color: #ffffff;
+  @apply bg-page text-fg;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  @apply bg-gold-400 text-ink-950;
 }
 
 @layer components {
@@ -17,14 +67,42 @@ body {
   }
 
   .section-eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-1.5 text-sm font-semibold text-brand-700 ring-1 ring-inset ring-brand-200;
+    @apply inline-flex items-center gap-2 rounded-full bg-accent-soft px-4 py-1.5 text-sm font-semibold text-accent ring-1 ring-inset ring-accent-ring;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold-500 px-6 py-3 text-sm font-semibold text-white shadow-soft transition-colors hover:bg-gold-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-action px-6 py-3 text-sm font-semibold text-action-fg shadow-soft transition-colors hover:bg-action-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink-200 bg-white px-6 py-3 text-sm font-semibold text-ink-800 transition-colors hover:border-ink-300 hover:bg-ink-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line-strong bg-surface px-6 py-3 text-sm font-semibold text-fg transition-colors hover:bg-surface-alt;
   }
+
+  .form-input {
+    @apply mt-1 w-full rounded-lg border border-line-strong bg-surface px-3 py-2 text-sm text-fg outline-none placeholder:text-fg-subtle focus:border-accent focus:ring-1 focus:ring-accent;
+  }
+}
+
+/* ---- WhatsApp flotante ---- */
+.wa-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: #25d366;
+  animation: wa-pulse 2.2s ease-out infinite;
+}
+.wa-pop {
+  animation: wa-pop 0.22s ease-out both;
+  transform-origin: bottom right;
+}
+@keyframes wa-pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+@keyframes wa-pop {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-ring, .wa-pop { animation: none; }
 }

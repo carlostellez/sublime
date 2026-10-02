@@ -7,7 +7,7 @@ const steps = [
   {
     number: "02",
     title: "Aprobamos el montaje digital",
-    desc: "Nuestro equipo diseña una muestra digital exacta de cómo quedará tu lanyard en menos de 2 horas.",
+    desc: "Nuestro equipo diseña una muestra digital exacta de cómo quedará tu lanyard en menos de 12 horas.",
   },
   {
     number: "03",
@@ -22,10 +22,10 @@ export default function Process() {
       <div className="container-page">
         <div className="mx-auto max-w-2xl text-center">
           <span className="section-eyebrow">Cómo funciona</span>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-fg sm:text-4xl">
             Proceso de compra en 3 simples pasos
           </h2>
-          <p className="mt-4 text-base text-ink-500 sm:text-lg">
+          <p className="mt-4 text-base text-fg-muted sm:text-lg">
             Sabemos que no tienes tiempo que perder. Por eso lo hacemos
             ridículamente fácil.
           </p>
@@ -34,13 +34,13 @@ export default function Process() {
         <div className="mt-14 grid gap-8 sm:grid-cols-3">
           {steps.map((step) => (
             <div key={step.number} className="relative">
-              <span className="text-5xl font-bold text-brand-100">
+              <span className="text-5xl font-bold text-accent/25">
                 {step.number}
               </span>
-              <h3 className="mt-3 text-base font-semibold text-ink-900">
+              <h3 className="mt-3 text-base font-semibold text-fg">
                 {step.title}
               </h3>
-              <p className="mt-2 text-sm text-ink-500">{step.desc}</p>
+              <p className="mt-2 text-sm text-fg-muted">{step.desc}</p>
             </div>
           ))}
         </div>

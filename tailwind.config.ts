@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: ["class"],
   content: [
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,6 +9,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Tokens semánticos: cambian con el tema (ver globals.css)
+        page: "rgb(var(--c-page) / <alpha-value>)",
+        surface: "rgb(var(--c-surface) / <alpha-value>)",
+        "surface-alt": "rgb(var(--c-surface-alt) / <alpha-value>)",
+        fg: "rgb(var(--c-fg) / <alpha-value>)",
+        "fg-muted": "rgb(var(--c-fg-muted) / <alpha-value>)",
+        "fg-subtle": "rgb(var(--c-fg-subtle) / <alpha-value>)",
+        line: "rgb(var(--c-line) / <alpha-value>)",
+        "line-soft": "rgb(var(--c-line-soft) / <alpha-value>)",
+        "line-strong": "rgb(var(--c-line-strong) / <alpha-value>)",
+        accent: "rgb(var(--c-accent) / <alpha-value>)",
+        "accent-soft": "rgb(var(--c-accent-soft) / <alpha-value>)",
+        "accent-ring": "rgb(var(--c-accent-ring) / <alpha-value>)",
+        cta: "rgb(var(--c-cta) / <alpha-value>)",
+        action: {
+          DEFAULT: "rgb(var(--c-action) / <alpha-value>)",
+          hover: "rgb(var(--c-action-hover) / <alpha-value>)",
+          fg: "rgb(var(--c-action-fg) / <alpha-value>)",
+        },
         brand: {
           50: "#eef5f6",
           100: "#d7e8ea",
@@ -69,7 +89,7 @@ const config: Config = {
         ],
       },
       boxShadow: {
-        soft: "0 10px 40px -12px rgba(15, 15, 25, 0.25)",
+        soft: "0 10px 40px -12px rgb(var(--c-shadow) / 0.25)",
       },
     },
   },

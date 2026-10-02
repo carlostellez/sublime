@@ -40,7 +40,7 @@ export default function Hero() {
             <div className="absolute -inset-6 rounded-[2rem] bg-gold-500/20 blur-3xl" />
             <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-soft">
               <Image
-                src="/images/product-colorful-desk.png"
+                src="/images/product-colorful-desk.webp"
                 alt="Lanyard corporativo con sublimación HD de alta definición"
                 width={1200}
                 height={750}

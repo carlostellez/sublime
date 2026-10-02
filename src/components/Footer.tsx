@@ -1,25 +1,32 @@
 import Image from "next/image";
+import { displayAddress, showLocation, site } from "@/config/site";
+import SocialLinks from "./SocialLinks";
 
 const columns = [
   {
     title: "Producto",
-    links: ["Sublimación HD", "Durabilidad", "Broches y accesorios", "Preguntas frecuentes"],
+    links: [
+      { label: "Sublimación HD", href: "#solucion" },
+      { label: "Durabilidad", href: "#solucion" },
+      { label: "Broches y accesorios", href: "#solucion" },
+      { label: "Preguntas frecuentes", href: "#faq" },
+    ],
   },
   {
     title: "Empresas",
-    links: ["Plan Stock Asegurado", "Cómo funciona", "Cotizar ahora"],
-  },
-  {
-    title: "Sublime Lab",
-    links: ["Sobre nosotros", "Contacto", "Política de privacidad"],
+    links: [
+      { label: "Plan Stock Asegurado", href: "#plan-stock" },
+      { label: "Cómo funciona", href: "#proceso" },
+      { label: "Cotizar ahora", href: "#contacto" },
+    ],
   },
 ];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-ink-100 bg-white py-14">
+    <footer className="border-t border-line-soft bg-surface py-14">
       <div className="container-page">
-        <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr_1fr_1.4fr]">
           <div>
             <a href="#top" className="flex items-center gap-2">
               <Image
@@ -29,11 +36,11 @@ export default function Footer() {
                 height={40}
                 className="h-10 w-10 object-contain"
               />
-              <span className="text-lg font-bold tracking-tight text-brand-700">
+              <span className="text-lg font-bold tracking-tight text-accent">
                 Sublime Lab
               </span>
             </a>
-            <p className="mt-4 max-w-xs text-sm text-ink-500">
+            <p className="mt-4 max-w-xs text-sm text-fg-muted">
               Lanyards corporativos con sublimación HD sin límites de color.
               Diseño, durabilidad y reposición sin fricción para tu empresa.
             </p>
@@ -41,30 +48,54 @@ export default function Footer() {
 
           {columns.map((col) => (
             <div key={col.title}>
-              <h4 className="text-sm font-semibold text-ink-900">
+              <h4 className="text-sm font-semibold text-fg">
                 {col.title}
               </h4>
               <ul className="mt-4 space-y-2">
                 {col.links.map((link) => (
-                  <li key={link}>
+                  <li key={link.label}>
                     <a
-                      href="#"
-                      className="text-sm text-ink-500 hover:text-ink-800"
+                      href={link.href}
+                      className="text-sm text-fg-muted hover:text-fg"
                     >
-                      {link}
+                      {link.label}
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
+
+          <div>
+            <h4 className="text-sm font-semibold text-fg">Contacto</h4>
+            <address className="mt-4 space-y-2 text-sm not-italic text-fg-muted">
+              {showLocation && (
+                <p>
+                  {displayAddress.street}
+                  <br />
+                  {[displayAddress.city, displayAddress.country].filter(Boolean).join(", ")}
+                </p>
+              )}
+              <p>
+                <a href={`https://wa.me/${site.contact.whatsapp}`} target="_blank" rel="noopener noreferrer" className="hover:text-fg">
+                  {site.contact.displayPhone} (WhatsApp)
+                </a>
+              </p>
+              <p>
+                <a href={`mailto:${site.contact.email}`} className="hover:text-fg">
+                  {site.contact.email}
+                </a>
+              </p>
+            </address>
+            <SocialLinks className="mt-4" />
+          </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-ink-100 pt-8 sm:flex-row">
-          <p className="text-xs text-ink-400">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-line-soft pt-8 sm:flex-row">
+          <p className="text-xs text-fg-subtle">
             © {new Date().getFullYear()} Sublime Lab · Creaciones sin límites.
           </p>
-          <p className="text-xs text-ink-400">
+          <p className="text-xs text-fg-subtle">
             Hecho para empresas, agencias, startups y distribuidores.
           </p>
         </div>

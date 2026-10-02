@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { whatsappConfig } from "@/config/whatsapp";
+import { displayAddress, showLocation, site } from "@/config/site";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -21,7 +23,7 @@ export default function ContactForm() {
   return (
     <section id="contacto" className="py-20 sm:py-28">
       <div className="container-page">
-        <div className="overflow-hidden rounded-3xl bg-gold-500">
+        <div className="overflow-hidden rounded-3xl bg-cta dark:ring-1 dark:ring-gold-500/40">
           <div className="grid gap-10 p-8 sm:p-12 lg:grid-cols-2 lg:gap-16">
             <div className="text-white">
               <span className="section-eyebrow bg-white/15 text-white ring-white/25">
@@ -33,25 +35,42 @@ export default function ContactForm() {
               </h2>
               <p className="mt-4 max-w-md text-gold-50">
                 Sin compromiso. Nuestro equipo prepara tu muestra en menos de
-                2 horas para que veas exactamente cómo quedará tu marca.
+                12 horas para que veas exactamente cómo quedará tu marca.
               </p>
 
               <div className="mt-8 space-y-3 text-sm text-gold-50">
                 <p className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                  ventas@sublimelab.com
+                  <a href={`mailto:${site.contact.email}`} className="underline-offset-4 hover:underline">
+                    {site.contact.email}
+                  </a>
                 </p>
                 <p className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                  +57 300 000 0000 (WhatsApp)
+                  <a
+                    href={`https://wa.me/${whatsappConfig.phone}?text=${encodeURIComponent(whatsappConfig.defaultMessage)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline-offset-4 hover:underline"
+                  >
+                    {whatsappConfig.displayPhone} (WhatsApp)
+                  </a>
                 </p>
+                {showLocation && (
+                  <p className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                    <a href="#ubicacion" className="underline-offset-4 hover:underline">
+                      Taller: {displayAddress.street}, {displayAddress.city}
+                    </a>
+                  </p>
+                )}
               </div>
             </div>
 
-            <div className="rounded-2xl bg-white p-6 shadow-soft sm:p-8">
+            <div className="rounded-2xl bg-surface p-6 shadow-soft sm:p-8">
               {submitted ? (
                 <div className="flex h-full min-h-[380px] flex-col items-center justify-center text-center">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-50 text-brand-700">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent-soft text-accent">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-6 w-6"
@@ -67,12 +86,12 @@ export default function ContactForm() {
                       />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-ink-900">
+                  <h3 className="text-lg font-semibold text-fg">
                     ¡Gracias! Ya estamos en tu montaje digital
                   </h3>
-                  <p className="mt-2 text-sm text-ink-500">
+                  <p className="mt-2 text-sm text-fg-muted">
                     Un asesor de Sublime Lab te enviará la muestra en menos de
-                    2 horas.
+                    12 horas.
                   </p>
                 </div>
               ) : (
@@ -81,7 +100,7 @@ export default function ContactForm() {
                     <div>
                       <label
                         htmlFor="name"
-                        className="block text-sm font-medium text-ink-700"
+                        className="block text-sm font-medium text-fg-muted"
                       >
                         Nombre y apellido
                       </label>
@@ -90,13 +109,13 @@ export default function ContactForm() {
                         name="name"
                         type="text"
                         required
-                        className="mt-1 w-full rounded-lg border border-ink-200 px-3 py-2 text-sm text-ink-900 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+                        className="form-input"
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="company"
-                        className="block text-sm font-medium text-ink-700"
+                        className="block text-sm font-medium text-fg-muted"
                       >
                         Nombre de la empresa
                       </label>
@@ -105,7 +124,7 @@ export default function ContactForm() {
                         name="company"
                         type="text"
                         required
-                        className="mt-1 w-full rounded-lg border border-ink-200 px-3 py-2 text-sm text-ink-900 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+                        className="form-input"
                       />
                     </div>
                   </div>
@@ -114,7 +133,7 @@ export default function ContactForm() {
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-sm font-medium text-ink-700"
+                        className="block text-sm font-medium text-fg-muted"
                       >
                         Correo corporativo
                       </label>
@@ -123,13 +142,13 @@ export default function ContactForm() {
                         name="email"
                         type="email"
                         required
-                        className="mt-1 w-full rounded-lg border border-ink-200 px-3 py-2 text-sm text-ink-900 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+                        className="form-input"
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="quantity"
-                        className="block text-sm font-medium text-ink-700"
+                        className="block text-sm font-medium text-fg-muted"
                       >
                         Cantidad estimada
                       </label>
@@ -138,7 +157,7 @@ export default function ContactForm() {
                         name="quantity"
                         type="text"
                         placeholder="Ej. 50, 100, 500+"
-                        className="mt-1 w-full rounded-lg border border-ink-200 px-3 py-2 text-sm text-ink-900 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+                        className="form-input"
                       />
                     </div>
                   </div>
@@ -146,18 +165,18 @@ export default function ContactForm() {
                   <div>
                     <label
                       htmlFor="logo"
-                      className="block text-sm font-medium text-ink-700"
+                      className="block text-sm font-medium text-fg-muted"
                     >
                       Adjuntar logo / vector
                     </label>
                     <label
                       htmlFor="logo"
-                      className="mt-1 flex cursor-pointer items-center justify-between gap-3 rounded-lg border border-dashed border-ink-300 px-3 py-2.5 text-sm text-ink-500 hover:border-brand-400 hover:text-brand-700"
+                      className="mt-1 flex cursor-pointer items-center justify-between gap-3 rounded-lg border border-dashed border-line-strong px-3 py-2.5 text-sm text-fg-muted hover:border-accent hover:text-accent"
                     >
                       <span className="truncate">
                         {fileName ?? "PNG, SVG, PDF o AI (máx. 10MB)"}
                       </span>
-                      <span className="shrink-0 rounded-full bg-ink-100 px-3 py-1 text-xs font-semibold text-ink-700">
+                      <span className="shrink-0 rounded-full bg-surface-alt px-3 py-1 text-xs font-semibold text-fg-muted">
                         Elegir archivo
                       </span>
                       <input
