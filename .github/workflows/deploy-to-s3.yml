@@ -1,0 +1,85 @@
+name: Deploy to S3 and CloudFront
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch: # permite lanzarlo a mano desde la pestaña Actions
+
+# Evita despliegues simultáneos: el más nuevo espera al que está corriendo.
+concurrency:
+  group: deploy-s3
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build and export
+        run: npm run build
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ secrets.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }}
+          NEXT_PUBLIC_BING_SITE_VERIFICATION: ${{ secrets.NEXT_PUBLIC_BING_SITE_VERIFICATION }}
+
+      - name: Check build output
+        run: |
+          test -f out/index.html || { echo "::error::No se generó out/index.html"; exit 1; }
+          test -n "$S3_BUCKET" || { echo "::error::Falta el secret S3_BUCKET_NAME"; exit 1; }
+
+      - name: Deploy to S3
+        run: |
+          # 1) Archivos versionados por Next: caché de 1 año
+          aws s3 sync ./out "s3://$S3_BUCKET" --delete \
+            --exclude "*" --include "_next/static/*" \
+            --cache-control "public,max-age=31536000,immutable"
+
+          # 2) Imágenes: caché de 7 días
+          aws s3 sync ./out "s3://$S3_BUCKET" --delete \
+            --exclude "*" --include "images/*" \
+            --cache-control "public,max-age=604800"
+
+          # 3) HTML, sitemap, robots, manifest y demás: siempre revalidar
+          aws s3 sync ./out "s3://$S3_BUCKET" --delete \
+            --exclude "_next/static/*" --exclude "images/*" \
+            --cache-control "public,max-age=0,must-revalidate"
+
+      - name: Invalidate CloudFront cache
+        env:
+          CF_DISTRIBUTION_ID: ${{ secrets.CF_DISTRIBUTION_ID }}
+        run: |
+          if [ -n "$CF_DISTRIBUTION_ID" ]; then
+            echo "Invalidating CloudFront distribution: $CF_DISTRIBUTION_ID"
+            aws cloudfront create-invalidation \
+              --distribution-id "$CF_DISTRIBUTION_ID" \
+              --paths "/*"
+          else
+            echo "CF_DISTRIBUTION_ID no configurado. Se omite la invalidación de CloudFront."
+          fi

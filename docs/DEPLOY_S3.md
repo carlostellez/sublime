@@ -41,6 +41,24 @@ npm run deploy:s3                     # construye y publica
 
 El script usa tres reglas de caché: `_next/static` (1 año, inmutable), imágenes (7 días) y HTML/sitemap/robots (siempre revalida), y luego invalida CloudFront.
 
+## Despliegue automático con GitHub Actions
+
+Cada `git push` a `master` ejecuta `.github/workflows/deploy-to-s3.yml`: instala dependencias, revisa tipos, construye el sitio, sube a S3 con las mismas reglas de caché del script y limpia CloudFront. También se puede lanzar a mano desde la pestaña **Actions → Deploy to S3 and CloudFront → Run workflow**.
+
+Configura estos *secrets* en GitHub (**Settings → Secrets and variables → Actions → New repository secret**):
+
+| Secret | Valor |
+|---|---|
+| `AWS_ACCESS_KEY_ID` | Clave de un usuario IAM de despliegue (permisos de la sección 2) |
+| `AWS_SECRET_ACCESS_KEY` | Su clave secreta |
+| `AWS_REGION` | Región del bucket (ej. `us-east-1`) |
+| `S3_BUCKET_NAME` | `front-sublimelab` |
+| `NEXT_PUBLIC_SITE_URL` | URL pública final, sin `/` (dominio o `https://dxxxx.cloudfront.net`) |
+| `CF_DISTRIBUTION_ID` | ID de CloudFront (opcional, pero recomendado) |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Opcionales |
+
+Usa un usuario IAM exclusivo para esto, con los permisos mínimos de la sección 2, y nunca subas sus claves al repositorio.
+
 ## 4. Después de publicar
 
 - Verifica `https://tudominio/sitemap.xml` y `https://tudominio/robots.txt`.
